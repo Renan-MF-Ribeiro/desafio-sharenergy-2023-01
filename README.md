@@ -6,7 +6,7 @@ Possuo forte senso de urgência e sou movido a desafios, buscando sempre novos c
 
 ## CONFIGURAÇÃO DO PROJETO
 
->Pré-requisitos ter nodoJS e NPM instalados na maquina.
+>Pré-requisitos ter nodeJS e NPM instalados na maquina.
 
 >> Acessar arquivo ".env" na raiz do projeto.
 
@@ -18,8 +18,13 @@ Possuo forte senso de urgência e sou movido a desafios, buscando sempre novos c
 
 ## VIDEO EXPLICATIVO
 
-Disponível em "https://youtu.be/u2vR6Ihro6k"<br />
-<a href="https://youtu.be/u2vR6Ihro6k">Video</a>
+<p>Disponível em</p>
+<p> 
+<a href="https://youtu.be/u2vR6Ihro6k">YouTube</a>
+</p>
+<p> 
+<a href="https://vimeo.com/788108968">Vimeo</a>
+</p>
 
 ## CONTATO E MIDIA SOCIAL
 
