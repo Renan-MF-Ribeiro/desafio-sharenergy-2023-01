@@ -16,14 +16,23 @@ Possuo forte senso de urgência e sou movido a desafios, buscando sempre novos c
 
 >> Na raiz do projeto executar o comando "NPM start". O comando irá instalar todas as dependencias do projeto e gerar os arquivos de build do front, após a instalação e build, o projeto está disponivel em localhost:{PORT}; *Porta configurada no arquivo ".env" (Default: 3000)
 
-## VIDEO COM EXPLICAÇÃO
+## VIDEO EXPLICATIVO
 
-Disponível em "https://youtu.be/u2vR6Ihro6k"
+Disponível em "https://youtu.be/u2vR6Ihro6k"<br />
 <a href="https://youtu.be/u2vR6Ihro6k">Video</a>
+
 ## CONTATO E MIDIA SOCIAL
 
+<p>
 <a href="http://renan-ribeiro.web.app" target="_blank">Portifólio</a>
+</p>
+<p>
 <a href="https://www.linkedin.com/in/renan-ribeiro-a3916711b/" target="_blank">Linkedin</a>
+</p>
+<p>
 <a href="https://github.com/Renan-MF-Ribeiro" target="_blank">GitHub</a>
+</p>
+<p>
 <a href="https://api.whatsapp.com/send?phone=5511916595492&text=Olá%20Boa%20tarde%2C%20sou%20da%20Share%20Energy" target="_blank">WhatsApp</a>
+</p>
 
