@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema({
     email: { type: String, required: true, trim: true },
     networkLogin: { type: String, trim: true },
     password: { type: Array, default: [] },
-    profilePhoto: { type: String, trim: true, required: false },
+    picture: { type: String, trim: true, required: false },
     birthDate: { type: String, trim: true },
 }, { ...optionsSchema });
 

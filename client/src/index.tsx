@@ -1,12 +1,20 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
+import React,{Suspense} from "react";
+import ReactDOM from "react-dom";
+import AppRouter from "Routes";
+import "normalize.css";
+import "./index.css";
+import { RecoilRoot } from "recoil";
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
-root.render(
+
+
+ReactDOM.render(
   <React.StrictMode>
-   <></>
-  </React.StrictMode>
+    <RecoilRoot>
+    <Suspense fallback="Loading...">
+      <AppRouter />
+      
+    </Suspense>
+    </RecoilRoot>
+  </React.StrictMode>,
+  document.getElementById("root")
 );

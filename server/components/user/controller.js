@@ -1,7 +1,12 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
 const { User } = require("./model");
-const { passwordGen, sleep, generateToken } = require("../../utils/functions");
+const {
+  passwordGen,
+  sleep,
+  generateToken,
+  validateToken,
+} = require("../../utils/functions");
 const _response = require("../../utils/response");
 const bcrypt = require("bcryptjs");
 const cryptoJS = require("crypto-js");
@@ -24,6 +29,7 @@ module.exports = {
           "profilePhoto",
           "email",
           "birthDate",
+          "picture",
         ]);
 
         if (user) {
@@ -51,22 +57,24 @@ module.exports = {
 
           const token = generateToken({
             ref: user._id,
-            profiles: profilesIDS.result,
-            numbers: profilesIDS.numbers,
-            groups: groupsIDS,
           });
 
           var tokenEncript = cryptoJS.AES.encrypt(token, login).toString();
           var key = login + ":" + password;
           key = cryptoJS.AES.encrypt(key, password).toString();
-          _response.success(res, {
-            tokenEncript,
-            key,
+          const respUser = {
             passwordValid: user.passwordValid,
             name: user.name,
             profilePhoto: user.profilePhoto,
             networkLogin: user.networkLogin,
-            userId: user._id,
+            _id: user._id,
+            email: user.email,
+            birthDate: user.birthDate,
+            picture: user.picture,
+          };
+          _response.success(res, {
+            tokenEncript,
+            user: respUser,
           });
         } else {
           await sleep(3000);
@@ -87,7 +95,6 @@ module.exports = {
       await userValue.validate();
 
       const processedUser = passwordGen(userValue);
-
       const userFound = await User.findOne({
         $or: [
           { email: processedUser.email },
@@ -95,7 +102,9 @@ module.exports = {
         ],
       });
       if (userFound) {
-        return _response.forbidden(res, { error: "User already exists" });
+        return _response.forbidden(res, {
+          error: "Usuária ou email já cadastrado",
+        });
       }
 
       await User.create(processedUser);
@@ -120,9 +129,54 @@ module.exports = {
   async update(req, res) {
     try {
       const { _id } = req.body;
-      const updated = await User.findByIdAndUpdate(_id, req.body);
-      return _response.success(res, updated);
+      const { id } = req.params;
+      if (id === _id) {
+        const updated = await User.findByIdAndUpdate(_id, req.body);
+        return _response.success(res, req.body);
+      } else {
+        return _response.badRequest(res, "Dados do usuario Divergentes");
+      }
     } catch (error) {
+      return _response.internalServer(res, error.message);
+    }
+  },
+
+  async changePassword(req, res) {
+    try {
+      const { id } = req.params;
+      const { password } = req.body;
+      const user = await User.findOne({ _id: id }, ["password"]);
+      var Oldpass = user.password.filter(function (obj) {
+        if (bcrypt.compareSync(password, obj.hash)) {
+          return true;
+        }
+
+        return false;
+      });
+      if (Oldpass.length > 0) {
+        _response.unauthorized(
+          res,
+          "Essa senha já foi utilizada anteriormente, por favor, crie uma nova senha."
+        );
+        return;
+      }
+
+      var salt = bcrypt.genSaltSync(10);
+      var hashPass = bcrypt.hashSync(password, salt);
+
+      var newPass = user.password.map(function (item, indice) {
+        item.valid = false;
+        return item;
+      });
+
+      newPass.push({ hash: hashPass, valid: true, createdAt: new Date() });
+
+      await User.findByIdAndUpdate(id, {
+        password: newPass,
+      });
+      _response.success(res, "Senha alterada com sucesso");
+    } catch (error) {
+      console.log(error);
       return _response.internalServer(res, error.message);
     }
   },
@@ -134,6 +188,18 @@ module.exports = {
       return _response.success(res, deleted);
     } catch (error) {
       return _response.internalServer(res, error.message);
+    }
+  },
+
+  async isAuthenticated(req, res) {
+    try {
+      if (await validateToken(req.headers.authorization)) {
+        _response.success(res, true);
+      } else {
+        _response.forbidden(res, false);
+      }
+    } catch (err) {
+      _response.internalServer(res, err);
     }
   },
 };
