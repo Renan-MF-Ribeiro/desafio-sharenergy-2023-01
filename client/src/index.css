@@ -1,0 +1,23 @@
+@font-face {
+  font-family: "Circular Std";
+  src: url("./assets/fonts/CircularStd-Bold.ttf") format("truetype");
+}
+
+*,
+html,
+body,
+p,
+span,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Circular Std";
+}
+
+body{
+    height: 100vh;
+    
+}

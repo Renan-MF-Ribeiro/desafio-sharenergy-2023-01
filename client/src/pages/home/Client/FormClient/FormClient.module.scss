@@ -1,0 +1,24 @@
+.boxContainer {
+  min-width: 600px;
+}
+
+.box {
+  width: 300px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &_Info {
+    height: 250px;
+  }
+  &_Avatar {
+    padding: 50px;
+    height: 250px;
+  }
+  &_Form {
+    padding: 10px;
+    height: 350px;
+    align-items: flex-start;
+
+  }
+}
